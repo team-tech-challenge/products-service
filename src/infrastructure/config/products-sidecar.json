@@ -1,0 +1,1053 @@
+{
+	"info": {
+		"_postman_id": "55582c39-2f5b-4978-a40c-84ad3e47f8ed",
+		"name": "Products-Sidecar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11088853"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Lanche\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/category/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Acompanhamento\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/category/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Bebida\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/category/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sobremesa\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/category/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sanduíche com carne bovina, alface, bacon, avocado e molho picante\",\n  \"price\": \"32.50\",\n  \"description\": \"Saboreie a perfeição em cada mordida com nosso irresistível sanduíche gourmet.\",\n  \"categoryId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sanduíche de frango com queijo suíço, rúcula, tomate e molho de maionese temperada\",\n  \"price\": \"25.50\",\n  \"description\": \"Delicie-se com o nosso sanduíche de frango gourmet, uma combinação perfeita de sabores frescos e deliciosos.\",\n  \"categoryId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sanduíche de frango do chef\",\n  \"price\": \"33.50\",\n  \"description\": \"Começamos com um suculento hambúrguer de frango, grelhado até a perfeição para garantir a máxima suculência e sabor.\",\n  \"categoryId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sanduíche de linguiça\",\n  \"price\": \"26.50\",\n  \"description\": \"Este sanduíche combina o sabor rico da linguiça caseira com o robusto queijo cheddar, a doçura da cebola caramelizada e o toque picante do molho de mostarda, tudo envolto no nutritivo Pão da casa.\",\n  \"categoryId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Coca-cola\",\n  \"price\": \"10\",\n  \"description\": \"Refrigerante de cola\",\n  \"categoryId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Suco de laranja\",\n  \"price\": \"10\",\n  \"description\": \"Suco 100% natural\",\n  \"categoryId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Coca-cola zero açucar\",\n  \"price\": \"10\",\n  \"description\": \"Refrigerante de cola sem açúcar\",\n  \"categoryId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "08",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Guaraná\",\n  \"price\": \"10\",\n  \"description\": \"Refrigerante de guaraná\",\n  \"categoryId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "09",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Soda\",\n  \"price\": \"10\",\n  \"description\": \"Refrigerante de limão\",\n  \"categoryId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Suco de uva\",\n  \"price\": \"10\",\n  \"description\": \"Suco 100% integral\",\n  \"categoryId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sanduíche vegetariano\",\n  \"price\": \"30.50\",\n  \"description\": \"Este sanduíche vegetariano oferece uma combinação deliciosa de sabores e texturas, com a carne de soja marinada como destaque principal, tudo envolto no saboroso Pão de Centeio.\",\n  \"categoryId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Batatas Fritas da Casa\",\n  \"price\": \"15\",\n  \"description\": \"Batatas cortadas em palitos e fritas até ficarem douradas e crocantes, temperadas com sal e ervas para um toque extra de sabor.\",\n  \"categoryId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "13",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Aneis de cebola\",\n  \"price\": \"15\",\n  \"description\": \"Fatias generosas de cebola são mergulhadas em uma massa leve e crocante, antes de serem fritas até a perfeição.\",\n  \"categoryId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "14",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Cheesecake de Frutas Vermelhas\",\n  \"price\": \"30\",\n  \"description\": \"Uma base de biscoito amanteigado coberta com um recheio cremoso de queijo, decorado com uma variedade de frutas vermelhas frescas como morangos, framboesas e amoras.\",\n  \"categoryId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "15",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Torta de Maçã com Sorvete de Baunilha\",\n  \"price\": \"30\",\n  \"description\": \"Uma torta de maçã caseira, recheada com maçãs fatiadas, canela e açúcar mascavo, servida quente com uma generosa bola de sorvete de baunilha.\",\n  \"categoryId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "16",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Creme Brûlée\",\n  \"price\": \"30\",\n  \"description\": \"Uma sobremesa clássica de restaurante que você pode fazer em casa.\",\n  \"categoryId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "17",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tiramisu\",\n  \"price\": \"30\",\n  \"description\": \"Camadas de biscoitos de champanhe embebidos em café, intercaladas com um creme de queijo mascarpone, tudo polvilhado com cacau em pó.\",\n  \"categoryId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/product/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Combo",
+			"item": [
+				{
+					"name": "01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Combo Bovino\",\n  \"discount\": \"10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Combo Frango do chef\",\n  \"discount\": \"15\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Combo Sobremesa\",\n  \"discount\": \"20\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Combo Vegetariano\",\n  \"discount\": \"15\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Combo Product",
+			"item": [
+				{
+					"name": "01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 1,\n  \"productId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 1,\n  \"productId\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 1,\n  \"productId\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 2,\n  \"productId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 2,\n  \"productId\": 8\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 2,\n  \"productId\": 13\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 3,\n  \"productId\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "08",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 3,\n  \"productId\": 17\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "09",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 4,\n  \"productId\": 11\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 4,\n  \"productId\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comboId\": 4,\n  \"productId\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADDRESS}}/combo/product/association/create",
+							"host": [
+								"{{API_ADDRESS}}"
+							],
+							"path": [
+								"combo",
+								"product",
+								"association",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_ADDRESS",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

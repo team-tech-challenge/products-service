@@ -5,7 +5,7 @@ FROM node:19-alpine as build
 WORKDIR /app
 
 # Copy dependency files first to take advantage of caching
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # Install dependencies
 RUN npm install
@@ -29,17 +29,14 @@ WORKDIR /app
 ENV HOME=/home/tech
 ENV NPM_CONFIG_CACHE=$HOME/.npm
 
-# Create the .npm directory and ensure it has the correct permissions
-RUN mkdir -p $NPM_CONFIG_CACHE && chown -R tech:tech $HOME
-
-# Switch to the non-root user
-USER tech
-
-# Copy only necessary artifacts from the build stage
+# Copy necessary artifacts from the build stage
 COPY --from=build /app /app
 
 # Ensure the non-root user has access to the app directory
-RUN chown -R tech:tech /app
+RUN chown -R tech:tech /app $HOME
+
+# Switch to the non-root user
+USER tech
 
 # Expose the port where your app will run
 EXPOSE 3000

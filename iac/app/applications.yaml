@@ -13,8 +13,8 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/team-tech-challenge/tech-challenge-manifest.git'
-    targetRevision: service_product
-    path: products-service/kustomize/overlays/dev
+    targetRevision: HEAD
+    path: products-service/kustomize/overlays/prd
     kustomize: {}
   destination:
     server: https://kubernetes.default.svc

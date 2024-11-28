@@ -1,9 +1,11 @@
 name: 'Deploy Application in Production'
 
 on:
-  push:
-    branches:
-      - develop
+    pull_request:
+        types:
+            - closed
+        branches:
+            - main
 
 permissions:
   contents: write
@@ -63,7 +65,7 @@ jobs:
     with:
       destination_repo: 'team-tech-challenge/tech-challenge-manifest'
       destination_branch: 'service_product'
-      kustomize_directory: 'products-service/kustomize/overlays/dev'
+      kustomize_directory: 'products-service/kustomize/overlays/prd'
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

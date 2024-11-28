@@ -1,11 +1,9 @@
-name: 'Deploy Application'
+name: 'Deploy Application in Production'
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
-      - main
+      - develop
 
 permissions:
   contents: write
@@ -57,7 +55,7 @@ jobs:
     uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/deploy-argocd.yml@main
     with:
       destination_repo: 'team-tech-challenge/tech-challenge-manifest'
-      destination_branch: 'main'
+      destination_branch: 'service_product'
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

@@ -4,23 +4,29 @@ FROM node:19
 # Criando e definindo o diretório de trabalho
 WORKDIR /usr/src/app
 
-# Configurando o usuário para evitar problemas de permissões
+# Criar o usuário e grupo para evitar problemas de permissão
 RUN useradd -ms /bin/bash appuser
+
+# Definir permissões para o diretório de trabalho
+RUN chown -R appuser:appuser /usr/src/app
+
+# Trocar para o usuário appuser
 USER appuser
 
-# Copiando os arquivos necessários para instalar dependências
+# Copiar os arquivos necessários
 COPY --chown=appuser:appuser package.json .
-
-# Copiando o restante do código
 COPY --chown=appuser:appuser . .
 
-# Instalando dependências (incluindo as de desenvolvimento)
+# Configurar o cache do npm para evitar problemas de permissão
+ENV NPM_CONFIG_CACHE=/usr/src/app/.npm-cache
+
+# Instalar dependências
 RUN npm install && npm run swagger
 
-# Adicionando o diretório node_modules/.bin ao PATH para garantir que os binários estejam acessíveis
+# Adicionar o diretório node_modules/.bin ao PATH
 ENV PATH="./node_modules/.bin:$PATH"
 
-# Expondo a porta usada pela aplicação
+# Expor a porta usada pela aplicação
 EXPOSE 3000
 
 # Comando de inicialização

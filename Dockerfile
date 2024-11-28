@@ -30,4 +30,4 @@ EXPOSE 3000
 
 # Comando para iniciar o servidor Node.js
 ENTRYPOINT ["npm"]
-CMD ["start --log-level=verbose"]
+CMD ["start"]

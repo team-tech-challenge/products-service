@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "src/main.ts",
 	"scripts": {
-		"start": "tsnd --no-cache -r dotenv/config -r tsconfig-paths/register --ignore-watch node_modules --respawn src/main.ts",
+		"start": "tsnd -r dotenv/config -r tsconfig-paths/register --ignore-watch node_modules --respawn src/main.ts",
 		"swagger": "ts-node src/infrastructure/config/swagger.ts"
 	},
 	"author": "",

@@ -1,45 +1,33 @@
 # Stage 1: Build
 FROM node:19-alpine as build
 
-# Define the working directory
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copy dependency files first to take advantage of caching
-COPY package.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application files
+# Copia os arquivos de dependência primeiro para utilizar caching
 COPY . .
 
-# Run necessary build steps (e.g., Swagger generation)
-RUN npm run swagger
+COPY package.json .
 
-# Stage 2: Runtime
+# Instala as dependências
+RUN npm install && npm run swagger
+
+# Stage 2: Run
 FROM node:19-alpine as runtime
 
-# Create a non-root user
+# Cria um usuário não-root
 RUN adduser -D tech
-
-# Define the working directory
-WORKDIR /app
-
-# Set the HOME environment variable to the user's home directory
-ENV HOME=/home/tech
-ENV NPM_CONFIG_CACHE=$HOME/.npm
-
-# Copy necessary artifacts from the build stage
-COPY --from=build /app /app
-
-# Ensure the non-root user has access to the app directory
-RUN chown -R tech:tech /app $HOME
-
-# Switch to the non-root user
 USER tech
 
-# Expose the port where your app will run
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copia apenas os artefatos necessários do estágio de build
+COPY --from=build /app /app
+
+# Expõe a porta em que sua aplicação rodará
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+# Comando para iniciar o servidor Node.js
+ENTRYPOINT ["npm"]
+CMD ["start"]

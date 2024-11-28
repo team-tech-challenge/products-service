@@ -7,20 +7,24 @@ WORKDIR /usr/src/app
 # Criar o usuário e grupo para evitar problemas de permissão
 RUN useradd -ms /bin/bash appuser
 
-# Definir permissões para o diretório de trabalho
-RUN chown -R appuser:appuser /usr/src/app
+# Criar diretório temporário gravável e ajustar permissões
+RUN mkdir -p /usr/src/app/tmp /usr/src/app/.npm-cache && \
+    chown -R appuser:appuser /usr/src/app
 
 # Trocar para o usuário appuser
 USER appuser
+
+# Definir o diretório temporário no ambiente
+ENV TMPDIR=/usr/src/app/tmp
+
+# Configurar o cache do npm para evitar problemas de permissão
+ENV NPM_CONFIG_CACHE=/usr/src/app/.npm-cache
 
 # Copiar os arquivos necessários
 COPY --chown=appuser:appuser package.json .
 COPY --chown=appuser:appuser . .
 
-# Configurar o cache do npm para evitar problemas de permissão
-ENV NPM_CONFIG_CACHE=/usr/src/app/.npm-cache
-
-# Instalar dependências
+# Instalar dependências e gerar Swagger
 RUN npm install && npm run swagger
 
 # Adicionar o diretório node_modules/.bin ao PATH

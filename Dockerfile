@@ -1,38 +1,33 @@
-# Etapa base: Utilizando uma imagem oficial do Node.js com suporte ao TypeScript
-FROM node:19
+# Stage 1: Build
+FROM node:19-alpine as build
 
-# Criando e definindo o diretório de trabalho
-WORKDIR /usr/src/app
+# Define o diretório de trabalho
+WORKDIR /app
 
-# Criar o usuário e grupo para evitar problemas de permissão
-RUN useradd -ms /bin/bash appuser
+# Copia os arquivos de dependência primeiro para utilizar caching
+COPY . .
 
-# Criar diretório temporário gravável e ajustar permissões
-RUN mkdir -p /usr/src/app/tmp /usr/src/app/.npm-cache && \
-    chown -R appuser:appuser /usr/src/app
+COPY package.json .
 
-# Trocar para o usuário appuser
-USER appuser
-
-# Definir o diretório temporário no ambiente
-ENV TMPDIR=/usr/src/app/tmp
-
-# Configurar o cache do npm para evitar problemas de permissão
-ENV NPM_CONFIG_CACHE=/usr/src/app/.npm-cache
-
-# Copiar os arquivos necessários
-COPY --chown=appuser:appuser package.json .
-COPY --chown=appuser:appuser . .
-
-# Instalar dependências e gerar Swagger
+# Instala as dependências
 RUN npm install && npm run swagger
 
-# Adicionar o diretório node_modules/.bin ao PATH
-ENV PATH="./node_modules/.bin:$PATH"
+# Stage 2: Run
+FROM node:19-alpine as runtime
 
-# Expor a porta usada pela aplicação
+# Cria um usuário não-root
+RUN adduser -D tech
+USER tech
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copia apenas os artefatos necessários do estágio de build
+COPY --from=build /app /app
+
+# Expõe a porta em que sua aplicação rodará
 EXPOSE 3000
 
-# Comando de inicialização
+# Comando para iniciar o servidor Node.js
 ENTRYPOINT ["npm"]
 CMD ["start"]

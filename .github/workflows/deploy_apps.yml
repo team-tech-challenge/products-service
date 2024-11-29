@@ -64,7 +64,7 @@ jobs:
     uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/create-argocd-kustomization.yml@create_new_workflow_with_kustomization
     with:
       destination_repo: 'team-tech-challenge/tech-challenge-manifest'
-      destination_branch: 'service_product'
+      destination_branch: 'main'
       kustomize_directory: 'products-service/kustomize/overlays/prd'
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -1,6 +1,0 @@
-projectKey=products-service
-serverUrl=http://localhost:9000
-serverVersion=10.5.1.90531
-dashboardUrl=http://localhost:9000/dashboard?id=products-service
-ceTaskId=9b9c8e5a-5fda-4810-80d6-d280fa3b42f0
-ceTaskUrl=http://localhost:9000/api/ce/task?id=9b9c8e5a-5fda-4810-80d6-d280fa3b42f0

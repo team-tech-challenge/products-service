@@ -1,5 +1,5 @@
 init:
-	cd iac/ && terraform init -upgrade -backend-config="bucket=tech-challenge-bucket-fase04" -backend-config="key=products-service/terraform.tfstate" -backend-config="region=us-east-1" && cd ../
+	cd iac/ && terraform init -upgrade -backend-config="bucket=techchallenge-bucket-s3" -backend-config="key=products-service/terraform.tfstate" -backend-config="region=us-east-1" && cd ../
 
 plan:
 	cd iac/ && terraform plan && cd ../

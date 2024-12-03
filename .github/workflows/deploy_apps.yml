@@ -1,11 +1,9 @@
-name: 'Deploy Application'
+name: 'Deploy Application - Products Service'
 
 on:
-    pull_request:
-        types:
-            - closed
-        branches:
-            - main
+  push:
+    branches:
+      - develop
 
 permissions:
   contents: write
@@ -13,14 +11,20 @@ permissions:
   actions: write
 
 jobs:
-  scanner-sonar:
-    uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/sonarqube-scanner.yml@create_new_workflow_with_kustomization
-    secrets:
-       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#  test-workflow:
+#    uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/npm-run-test.yml@create_workflow_npm_run_test
+#    with:
+#        node_version: "18"
+#        test_command: "npm test"
+
+#  scanner-sonar:
+#    uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/sonarqube-scanner.yml@main
+#    secrets:
+#       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   create-ecr:
-    needs: scanner-sonar
+#    needs: test-workflow
     uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/create-elastic-container-registry.yml@main
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -61,7 +65,7 @@ jobs:
 
   change-tag:
     needs: apps-argocd
-    uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/create-argocd-kustomization.yml@create_new_workflow_with_kustomization
+    uses: team-tech-challenge/terraform-reusable-actions/.github/workflows/create-argocd-kustomization.yml@main
     with:
       destination_repo: 'team-tech-challenge/tech-challenge-manifest'
       destination_branch: 'main'

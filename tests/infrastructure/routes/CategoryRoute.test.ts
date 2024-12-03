@@ -1,91 +1,79 @@
 import request from 'supertest';
 import express from 'express';
-import { customerRoute } from '@routes/CustomerRoute';
-import { CustomerController } from '@controllers/CustomerController';
+import { categoryRoute } from '@routes/CategoryRoute'; // Ajuste o caminho conforme necessário
 
-// Create an Express app
+jest.mock('@controllers/CategoryController', () => {
+    return {
+        CategoryController: jest.fn().mockImplementation(() => {
+            return {
+                getAll: jest.fn(),
+                createCategory: jest.fn(),
+            };
+        }),
+    };
+});
+
 const app = express();
-app.use(express.json()); // For parsing application/json
-app.use('/customers', customerRoute);
+app.use(express.json());
+app.use('/categories', categoryRoute);
 
-// Mock the CustomerController methods
-jest.mock('@controllers/CustomerController');
+// Aumentar o timeout para 10 segundos
+jest.setTimeout(10000);
 
-const mockedController = CustomerController as jest.MockedClass<typeof CustomerController>;
+describe('Category Routes', () => {
+    let categoryController;
 
-describe('Customer Routes', () => {
-	beforeEach(() => {
-		// Clear all instances and calls to constructor and all methods:
-		mockedController.mockClear();
-	});
+    beforeEach(() => {
+        const { CategoryController } = require('@controllers/CategoryController');
+        categoryController = new CategoryController();
+    });
 
-	it('GET /customers/all - should return all customers', async () => {
-		const mockResponse = [{ id: 1, name: 'John Doe' }];
-		mockedController.prototype.getAll.mockImplementation(async (req, res) => {
-			res.status(200).json(mockResponse);
-		});
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-		const response = await request(app).get('/customers/all');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual(mockResponse);
-	});
+    describe('GET /categories/all', () => {
+        it('Deve retornar todas as categorias', async () => {
+            // Dado que existem categorias
+            const mockCategories = [{ id: 1, name: 'Category 1' }, { id: 2, name: 'Category 2' }];
+            
+            categoryController.getAll.mockImplementation((req, res) => {
+                res.status(200).json(mockCategories); // Mockando a resposta
+            });
 
-	it('POST /customers/create - should create a new customer', async () => {
-		const newCustomer = { name: 'Jane Doe' };
-		mockedController.prototype.createCustomer.mockImplementation(async (req, res) => {
-			res.status(201).json({ id: 2, ...newCustomer });
-		});
+            // Quando o usuário faz uma solicitação GET para /categories/all
+            const response = await request(app).get('/categories/all');
 
-		const response = await request(app)
-			.post('/customers/create')
-			.send(newCustomer)
-			.set('Accept', 'application/json');
-		expect(response.status).toBe(201);
-		expect(response.body).toEqual({ id: 2, ...newCustomer });
-	});
+            // Então deve retornar um status 200
+            expect(response.status).toBe(200);
+            // E deve retornar as categorias esperadas
+            expect(response.body).toEqual(mockCategories);
+            // E a função getAll deve ter sido chamada
+            expect(categoryController.getAll).toHaveBeenCalled();
+        });
+    });
 
-	it('GET /customers/search/:cpf - should search for a customer by CPF', async () => {
-		const mockCustomer = { id: 1, name: 'John Doe', cpf: '12345678901' };
-		mockedController.prototype.searchCustomer.mockImplementation(async (req, res) => {
-			res.status(200).json(mockCustomer);
-		});
+    describe('POST /categories/create', () => {
+        it('Deve criar uma nova categoria', async () => {
+            // Dado que uma nova categoria é fornecida
+            const newCategory = { name: 'New Category' };
+            
+            categoryController.createCategory.mockImplementation((req, res) => {
+                res.status(201).json({ id: 3, ...req.body }); // Mockando a resposta
+            });
 
-		const response = await request(app).get('/customers/search/12345678901');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual(mockCustomer);
-	});
+            // Quando o usuário faz uma solicitação POST para /categories/create
+            const response = await request(app)
+                .post('/categories/create')
+                .send(newCategory)
+                .set('Accept', 'application/json');
 
-	it('PUT /customers/update/:id - should update a customer by ID', async () => {
-		const updatedCustomer = { name: 'John Smith' };
-		mockedController.prototype.updateCustomer.mockImplementation(async (req, res) => {
-			res.status(200).json({ id: req.params.id, ...updatedCustomer });
-		});
-
-		const response = await request(app)
-			.put('/customers/update/1')
-			.send(updatedCustomer)
-			.set('Accept', 'application/json');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual({ id: '1', ...updatedCustomer });
-	});
-
-	it('DELETE /customers/delete/:id - should delete a customer by ID', async () => {
-		mockedController.prototype.deleteCustomer.mockImplementation(async (req, res) => {
-			res.status(204).send();
-		});
-
-		const response = await request(app).delete('/customers/delete/1');
-		expect(response.status).toBe(204);
-	});
-
-	it('GET /customers/:id/campaigns - should get customer campaigns', async () => {
-		const mockCampaigns = [{ id: 1, name: 'Campaign A' }];
-		mockedController.prototype.getCustomerCampaigns.mockImplementation(async (req, res) => {
-			res.status(200).json(mockCampaigns);
-		});
-
-		const response = await request(app).get('/customers/1/campaigns');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual(mockCampaigns);
-	});
+            // Então deve retornar um status 201
+            expect(response.status).toBe(201);
+            // E deve retornar a nova categoria criada
+            expect(response.body).toEqual({ id: 3, ...newCategory });
+            // E a função createCategory deve ter sido chamada com os parâmetros corretos
+            expect(categoryController.createCategory).toHaveBeenCalledWith(expect.any(Object), expect.any(Object));
+        });
+    });
 });

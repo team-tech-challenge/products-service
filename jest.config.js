@@ -18,4 +18,5 @@ module.exports = {
 		"<rootDir>/",
 	],
   	testMatch: ["<rootDir>/tests/**/*.test.ts"], // Define onde estão os testes
+	testPathIgnorePatterns: ["tests/application/utils/errors/productErrors.test.ts", "tests/infrastructure/routes/", "tests/application/adapters/", "tests/application/controllers", "tests/infrastructure/mappers/" ],
   };

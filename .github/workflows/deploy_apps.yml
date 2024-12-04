@@ -1,9 +1,11 @@
 name: 'Deploy Application - Products Service'
 
 on:
-  push:
-    branches:
-      - develop
+    pull_request:
+        types:
+            - closed
+        branches:
+            - main
 
 permissions:
   contents: write

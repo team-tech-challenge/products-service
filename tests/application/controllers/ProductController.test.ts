@@ -1,235 +1,206 @@
-import { ProductController } from '@controllers/ProductController';
-import { ProductUseCase } from '@usecases/ProductUseCase';
-import { defaultReturnStatement } from '@utils/http';
-import { Product } from '@entities/Product';
+import { ProductController } from "@controllers/ProductController";
+import { ProductUseCase } from "@usecases/ProductUseCase";
+import { defaultReturnStatement } from "@utils/http";
+
+jest.mock("@utils/http");
+
+describe("ProductController", () => {
+	let productUseCase: jest.Mocked<ProductUseCase>;
+	let productController: ProductController;
+	let mockReq: any;
+	let mockRes: any;
+
+	beforeEach(() => {
+		productUseCase = {
+			getAll: jest.fn(),
+			getProductById: jest.fn(),
+			getProductByCategory: jest.fn(),
+			createProduct: jest.fn(),
+			updateProduct: jest.fn(),
+			deleteProduct: jest.fn(),
+		} as unknown as jest.Mocked<ProductUseCase>;
+
+		productController = new ProductController(productUseCase);
+
+		mockReq = { params: {}, body: {} };
+		mockRes = {
+			json: jest.fn(),
+			status: jest.fn().mockReturnThis(),
+		};
+		(defaultReturnStatement as jest.Mock).mockImplementation((res, message, data) =>
+			res.json({ message, data })
+		);
+	});
+
+	describe("getAll", () => {
+		it("should return all products", async () => {
+			const mockProducts = [{ id: 1, name: "Product 1" }];
+			productUseCase.getAll.mockResolvedValue(mockProducts);
+
+			await productController.getAll(mockReq, mockRes);
+
+			expect(productUseCase.getAll).toHaveBeenCalled();
+			expect(defaultReturnStatement).toHaveBeenCalledWith(mockRes, "Products", mockProducts);
+		});
+
+		it("should handle errors", async () => {
+			const error = new Error("Database error");
+			productUseCase.getAll.mockRejectedValue(error);
+
+			await productController.getAll(mockReq, mockRes);
+
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.json).toHaveBeenCalledWith({ status: 500, error });
+		});
+	});
+
+	describe("getProductById", () => {
+		it("should return a product if found", async () => {
+			const mockProduct = { id: 1, name: "Product 1" };
+			mockReq.params.Id = "1";
+			productUseCase.getProductById.mockResolvedValue(null);
+
+			await productController.getProductById(mockReq, mockRes);
+
+			expect(productUseCase.getProductById).toHaveBeenCalledWith("1");
+			expect(mockRes.json).toHaveBeenCalledWith(mockProduct);
+		});
+
+		it("should return 404 if product not found", async () => {
+			mockReq.params.Id = "1";
+			productUseCase.getProductById.mockResolvedValue(null);
+
+			await productController.getProductById(mockReq, mockRes);
+
+			expect(mockRes.status).toHaveBeenCalledWith(404);
+			expect(mockRes.json).toHaveBeenCalledWith({ error: "Product not found" });
+		});
+
+		it("should handle errors", async () => {
+			const error = new Error("Internal server error");
+			mockReq.params.Id = "1";
+			productUseCase.getProductById.mockRejectedValue(error);
+
+			await productController.getProductById(mockReq, mockRes);
+
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.json).toHaveBeenCalledWith({ error: error.message });
+		});
+	});
+
+	describe("getProductByCategory", () => {
+		it("should return products by category", async () => {
+			const mockProducts = [{ id: 1, name: "Product 1" }];
+			mockReq.params.categoryId = "2";
+			productUseCase.getProductByCategory.mockResolvedValue(mockProducts);
+
+			await productController.getProductByCategory(mockReq, mockRes);
+
+			expect(productUseCase.getProductByCategory).toHaveBeenCalledWith("2");
+			expect(defaultReturnStatement).toHaveBeenCalledWith(mockRes, "Products", mockProducts);
+		});
 
-jest.mock('../../src/usecases/ProductUseCase');
-jest.mock('../../src/utils/http', () => ({
-  defaultReturnStatement: jest.fn(),
-}));
+		it("should handle errors", async () => {
+			const error = new Error("Category fetch error");
+			mockReq.params.categoryId = "2";
+			productUseCase.getProductByCategory.mockRejectedValue(error);
 
-const mockedProductUseCase = new ProductUseCase(null) as jest.Mocked<ProductUseCase>;
+			await productController.getProductByCategory(mockReq, mockRes);
 
-const mockRequest = (body = {}, params = {}) => ({
-  body,
-  params,
-});
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.json).toHaveBeenCalledWith({ status: 500, error });
+		});
+	});
 
-const mockResponse = () => {
-  const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn().mockReturnThis(),
-  };
-  return res;
-};
+	describe("createProduct", () => {
+		it("should create a product", async () => {
+			const mockProduct = { id: 1, name: "New Product" };
+			mockReq.body = mockProduct;
+			productUseCase.createProduct.mockResolvedValue(null);
 
-describe('ProductController', () => {
-  let controller: ProductController;
+			await productController.createProduct(mockReq, mockRes);
 
-  beforeEach(() => {
-    controller = new ProductController(mockedProductUseCase);
-    jest.clearAllMocks();
-  });
+			expect(productUseCase.createProduct).toHaveBeenCalledWith(mockProduct);
+			expect(defaultReturnStatement).toHaveBeenCalledWith(mockRes, "Product Created", mockProduct);
+		});
 
-  describe('getAll', () => {
-    it('should get all products', async () => {
-      const mockProducts = [
-        new Product('Product 1', 'Description 1', 100, 1, 1),
-      ];
-      mockedProductUseCase.getAll.mockResolvedValue(mockProducts);
+		it("should handle errors", async () => {
+			const error = new Error("Create product error");
+			mockReq.body = { name: "New Product" };
+			productUseCase.createProduct.mockRejectedValue(error);
 
-      const req = mockRequest();
-      const res = mockResponse();
+			await productController.createProduct(mockReq, mockRes);
 
-      await controller.getAll(req, res);
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.json).toHaveBeenCalledWith({ status: 500, error });
+		});
+	});
 
-      expect(defaultReturnStatement).toHaveBeenCalledWith(res, "Products", mockProducts);
-    });
+	describe("updateProduct", () => {
+		it("should update a product", async () => {
+			const mockResult = { success: true };
+			mockReq.params.id = "1";
+			mockReq.body = { name: "Updated Product" };
+			productUseCase.updateProduct.mockResolvedValue(null);
 
-    it('should handle error in getAll', async () => {
-      const error = new Error('Test Error');
-      mockedProductUseCase.getAll.mockRejectedValue(error);
+			await productController.updateProduct(mockReq, mockRes);
 
-      const req = mockRequest();
-      const res = mockResponse();
+			expect(productUseCase.updateProduct).toHaveBeenCalledWith("1", mockReq.body);
+			expect(defaultReturnStatement).toHaveBeenCalledWith(mockRes, "Product updated successfully", mockResult);
+		});
 
-      await controller.getAll(req, res);
+		it("should handle 404 error for product not found", async () => {
+			const error = new Error("Product not found");
+			mockReq.params.id = "1";
+			productUseCase.updateProduct.mockRejectedValue(error);
 
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ status: 500, error });
-    });
-  });
+			await productController.updateProduct(mockReq, mockRes);
 
-  describe('getProductById', () => {
-    it('should get a product by ID', async () => {
-      const mockProduct = new Product('Product 1', 'Description 1', 100, 1, 1);
-      mockedProductUseCase.getProductById.mockResolvedValue(mockProduct);
+			expect(mockRes.status).toHaveBeenCalledWith(404);
+			expect(mockRes.json).toHaveBeenCalledWith({ status: 404, error });
+		});
 
-      const req = mockRequest({}, { Id: '1' });
-      const res = mockResponse();
+		it("should handle other errors", async () => {
+			const error = new Error("Database error");
+			mockReq.params.id = "1";
+			productUseCase.updateProduct.mockRejectedValue(error);
 
-      await controller.getProductById(req, res);
+			await productController.updateProduct(mockReq, mockRes);
 
-      expect(res.json).toHaveBeenCalledWith(mockProduct);
-    });
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.json).toHaveBeenCalledWith({ status: 500, error });
+		});
+	});
 
-    it('should handle product not found in getProductById', async () => {
-      mockedProductUseCase.getProductById.mockResolvedValue(null);
+	describe("deleteProduct", () => {
+		it("should delete a product if found", async () => {
+			productUseCase.deleteProduct.mockResolvedValue(1);
+			mockReq.params.id = "1";
 
-      const req = mockRequest({}, { Id: '1' });
-      const res = mockResponse();
+			await productController.deleteProduct(mockReq, mockRes);
 
-      await controller.getProductById(req, res);
+			expect(productUseCase.deleteProduct).toHaveBeenCalledWith("1");
+			expect(defaultReturnStatement).toHaveBeenCalledWith(mockRes, "Product deleted successfully", 1);
+		});
 
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Product not found' });
-    });
+		it("should return not found if product not deleted", async () => {
+			productUseCase.deleteProduct.mockResolvedValue(0);
+			mockReq.params.id = "1";
 
-    it('should handle error in getProductById', async () => {
-      const error = new Error('Test Error');
-      mockedProductUseCase.getProductById.mockRejectedValue(error);
+			await productController.deleteProduct(mockReq, mockRes);
 
-      const req = mockRequest({}, { Id: '1' });
-      const res = mockResponse();
+			expect(defaultReturnStatement).toHaveBeenCalledWith(mockRes, "Product not found", 0);
+		});
 
-      await controller.getProductById(req, res);
+		it("should handle errors", async () => {
+			const error = new Error("Internal server error");
+			mockReq.params.id = "1";
+			productUseCase.deleteProduct.mockRejectedValue(error);
 
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: error.message });
-    });
-  });
+			await productController.deleteProduct(mockReq, mockRes);
 
-  describe('getProductByCategory', () => {
-    it('should get products by category', async () => {
-      const mockProducts = [
-        new Product('Product 1', 'Description 1', 100, 1, 1),
-      ];
-      mockedProductUseCase.getProductByCategory.mockResolvedValue(mockProducts);
-
-      const req = mockRequest({}, { categoryId: '1' });
-      const res = mockResponse();
-
-      await controller.getProductByCategory(req, res);
-
-      expect(defaultReturnStatement).toHaveBeenCalledWith(res, "Products", mockProducts);
-    });
-
-    it('should handle error in getProductByCategory', async () => {
-      const error = new Error('Test Error');
-      mockedProductUseCase.getProductByCategory.mockRejectedValue(error);
-
-      const req = mockRequest({}, { categoryId: '1' });
-      const res = mockResponse();
-
-      await controller.getProductByCategory(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ status: 500, error });
-    });
-  });
-
-  describe('createProduct', () => {
-    it('should create a new product', async () => {
-      const mockProduct = new Product('New Product', 'New Description', 200, 1, 1);
-      mockedProductUseCase.createProduct.mockResolvedValue(mockProduct);
-
-      const req = mockRequest({ name: 'New Product', description: 'New Description', price: 200, categoryId: 1 });
-      const res = mockResponse();
-
-      await controller.createProduct(req, res);
-
-      expect(defaultReturnStatement).toHaveBeenCalledWith(res, "Product Created", mockProduct);
-    });
-
-    it('should handle error in createProduct', async () => {
-      const error = new Error('Test Error');
-      mockedProductUseCase.createProduct.mockRejectedValue(error);
-
-      const req = mockRequest({ name: 'New Product', description: 'New Description', price: 200, categoryId: 1 });
-      const res = mockResponse();
-
-      await controller.createProduct(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ status: 500, error });
-    });
-  });
-
-  describe('updateProduct', () => {
-    it('should update a product', async () => {
-      mockedProductUseCase.updateProduct.mockResolvedValue();
-
-      const req = mockRequest({ name: 'Updated Product', description: 'Updated Description', price: 300, categoryId: 2 }, { id: '1' });
-      const res = mockResponse();
-
-      await controller.updateProduct(req, res);
-
-      expect(defaultReturnStatement).toHaveBeenCalledWith(res, "Product updated successfully", undefined);
-    });
-
-    it('should handle product not found in updateProduct', async () => {
-      const error = new Error('Product not found');
-      mockedProductUseCase.updateProduct.mockRejectedValue(error);
-
-      const req = mockRequest({ name: 'Updated Product', description: 'Updated Description', price: 300, categoryId: 2 }, { id: '1' });
-      const res = mockResponse();
-
-      await controller.updateProduct(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ status: 404, error });
-    });
-
-    it('should handle error in updateProduct', async () => {
-      const error = new Error('Test Error');
-      mockedProductUseCase.updateProduct.mockRejectedValue(error);
-
-      const req = mockRequest({ name: 'Updated Product', description: 'Updated Description', price: 300, categoryId: 2 }, { id: '1' });
-      const res = mockResponse();
-
-      await controller.updateProduct(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ status: 500, error });
-    });
-  });
-
-  describe('deleteProduct', () => {
-    it('should delete a product', async () => {
-      mockedProductUseCase.deleteProduct.mockResolvedValue(1);
-
-      const req = mockRequest({}, { id: '1' });
-      const res = mockResponse();
-
-      await controller.deleteProduct(req, res);
-
-      expect(defaultReturnStatement).toHaveBeenCalledWith(res, "Product deleted successfully", 1);
-    });
-
-    it('should handle product not found in deleteProduct', async () => {
-      const error = new Error('Product not found');
-      mockedProductUseCase.deleteProduct.mockRejectedValue(error);
-
-      const req = mockRequest({}, { id: '1' });
-      const res = mockResponse();
-
-      await controller.deleteProduct(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ status: 404, error });
-    });
-
-    it('should handle error in deleteProduct', async () => {
-      const error = new Error('Test Error');
-      mockedProductUseCase.deleteProduct.mockRejectedValue(error);
-
-      const req = mockRequest({}, { id: '1' });
-      const res = mockResponse();
-
-      await controller.deleteProduct(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ status: 500, error });
-    });
-  });
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.json).toHaveBeenCalledWith({ status: 500, error });
+		});
+	});
 });

@@ -1,5 +1,4 @@
 import { IProductGateway } from "@gateways/IProductGateway";
-import { ICategoryGateway } from "@gateways/ICategoryGateway";
 import { Product } from "@entities/Product";
 import { ProductNotFoundError } from "@utils/errors/productErrors";
 

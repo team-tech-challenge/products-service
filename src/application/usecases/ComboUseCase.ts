@@ -1,6 +1,5 @@
 import { IComboGateway } from "@gateways/IComboGateway";
 import { Combo } from "@entities/Combo";
-import { Product } from "@entities/Product";
 import { ComboProduct } from "@entities/ComboProduct";
 
 export class ComboUseCase {
@@ -29,7 +28,7 @@ export class ComboUseCase {
 		if (!comboProduct) {
 			throw new Error('Combo product not found');
 		}
-	  
+
 		return comboProduct;
 	}
 }
